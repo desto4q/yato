@@ -15,11 +15,11 @@ List<Map> items = [
   {"name": "home", "icon": Icons.home},
   {"name": "dummy", "icon": Icons.feed},
 ];
-List<Widget> tabItems = [TabHome(), TabDummy()];
+List<Widget> tabItems = [const TabHome(), const TabDummy()];
 
 class _TabNavState extends State<TabNav> {
   int _selected_index = 0;
-  Color _active_color = ThemeData.dark().focusColor;
+  final Color _active_color = ThemeData.dark().focusColor;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -10,24 +10,27 @@ class TabHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Yato"),
+        title: const Text("Yato"),
       ),
       body: ListView(
         children: [
-          Carousel(),
-          SizedBox(
+          const Carousel(),
+          const SizedBox(
             height: 18,
           ),
           HomeSection(
             title: "Top Airing",
             call: ZoroAnime().getTop,
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           HomeSection(
             title: "Popular",
             call: ZoroAnime().getPopular,
+          ),
+          const SizedBox(
+            height: 18,
           ),
           HomeSection(
             title: "Recent",

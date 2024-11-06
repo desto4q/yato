@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_requery/flutter_requery.dart';
+import 'package:yato/components/loader.dart';
+import 'package:yato/components/section_card.dart';
 
 class HomeSection extends StatelessWidget {
   const HomeSection({super.key, required this.title, required this.call});
@@ -8,24 +10,45 @@ class HomeSection extends StatelessWidget {
   final Function call;
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
 
-    return Container(
-      height: _size.height * 2 / 8 + 60,
+    return SizedBox(
+      height: size.height * 2 / 8 + 80,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title),
-            SizedBox(
+            Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
               height: 12,
             ),
             Expanded(
                 child: Query([title],
                     builder: (builder, snapshot) {
                       if (snapshot.loading) {
-                        return Loader();
+                        return const Loader();
+                      }
+                      if (snapshot.error != null) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(snapshot.error.toString()),
+                            InkWell(
+                              onTap: () {
+                                queryCache.invalidateQueries(title);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("reload"),
+                              ),
+                            )
+                          ],
+                        );
                       }
                       final data = snapshot.data;
                       final List results = data["results"] ?? [];
@@ -42,44 +65,6 @@ class HomeSection extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class SectionCard extends StatelessWidget {
-  const SectionCard({super.key, required this.mediaObject});
-  final mediaObject;
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 7 / 10,
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: CachedNetworkImage(imageUrl: mediaObject["image"],fit: BoxFit.cover,),
-            ),
-            Text(
-              mediaObject["title"],
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Loader extends StatelessWidget {
-  const Loader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
     );
   }
 }

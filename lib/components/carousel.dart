@@ -13,24 +13,24 @@ class Carousel extends StatefulWidget {
 
 class _CarouselState extends State<Carousel> {
   final _controller = FlutterCarouselController();
-  ValueNotifier<int> _currentPage = ValueNotifier(0);
+  final ValueNotifier<int> _currentPage = ValueNotifier(0);
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
 
-    return Container(
-      height: _size.height * 2 / 8 + 60,
+    return SizedBox(
+      height: size.height * 2 / 8 + 60,
       child: Query(
-        ["cacheKey"],
+        const ["cacheKey"],
         builder: (context, snapshot) {
           if (snapshot.loading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
           if (snapshot.error != null) {
-            return Center(
+            return const Center(
               child: Text("error"),
             );
           }
@@ -40,7 +40,7 @@ class _CarouselState extends State<Carousel> {
                 onTap: () {
                   queryCache.invalidateQueries("cacheKey");
                 },
-                child: Text("refetch"),
+                child: const Text("refetch"),
               ),
             );
           }
@@ -67,8 +67,8 @@ class _CarouselState extends State<Carousel> {
                   // enableInfiniteScroll: true,
                   autoPlay: true,
                   pauseAutoPlayOnManualNavigate: true,
-                  autoPlayInterval: Duration(seconds: 5),
-                  autoPlayAnimationDuration: Duration(milliseconds: 500),
+                  autoPlayInterval: const Duration(seconds: 5),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 500),
                   autoPlayCurve: Curves.easeInOut,
                   controller: _controller,
                   onPageChanged: (page, _) {
@@ -101,8 +101,8 @@ class Card extends StatelessWidget {
                 width: double.infinity,
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
-                    Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
                 imageUrl: mediaObject["banner"],
               ),
             ),
@@ -111,12 +111,12 @@ class Card extends StatelessWidget {
             mediaObject["title"],
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           Row(
             children: [
               Text("Episodes: ${mediaObject["sub"]}"),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Text("Release: ${mediaObject["releaseDate"]}")

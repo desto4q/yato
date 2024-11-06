@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'dart:convert';
 
 class ZoroAnime {
   // Method to fetch the data
