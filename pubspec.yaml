@@ -41,6 +41,12 @@ dependencies:
   flutter_carousel_widget: ^3.1.0
   cached_network_image: ^3.4.1
   transitioned_indexed_stack: ^1.0.2
+  d4_interpolate: ^1.0.4
+  expandable_page_view: ^1.0.17
+  expand_widget: ^3.1.1
+  expandable_text: ^2.3.0
+  better_player: ^0.0.84
+  flutter_hls_parser: ^2.0.1
 
 dev_dependencies:
   flutter_test:

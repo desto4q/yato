@@ -32,6 +32,28 @@ class HomeSection extends StatelessWidget {
                       if (snapshot.loading) {
                         return const Loader();
                       }
+
+                      if (snapshot.data == null) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Text("Error"),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                queryCache.invalidateQueries(title);
+                              },
+                              
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Reload"),
+                              ),
+                            )
+                          ],
+                        );
+                      }
                       if (snapshot.error != null) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,6 +75,7 @@ class HomeSection extends StatelessWidget {
                       final data = snapshot.data;
                       final List results = data["results"] ?? [];
                       return ListView.builder(
+                          physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: results.length,
                           itemBuilder: (context, index) {

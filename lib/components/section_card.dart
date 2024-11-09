@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:yato/stackscreens/info_page.dart';
 
 class SectionCard extends StatelessWidget {
   const SectionCard({super.key, required this.mediaObject});
@@ -7,8 +8,13 @@ class SectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        
+      onTap: () {
+        final route = MaterialPageRoute(
+          builder: (context) {
+            return InfoPage(mediaObject: mediaObject);
+          },
+        );
+        Navigator.push(context, route);
       },
       borderRadius: BorderRadius.circular(8),
       child: AspectRatio(
@@ -36,12 +42,10 @@ class SectionCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-                Text(
+              Text(
                 "Ep: ${mediaObject["sub"]}",
                 maxLines: 1,
-                style: TextStyle(
-                  color: Colors.grey.shade600
-                ),
+                style: TextStyle(color: Colors.grey.shade600),
                 overflow: TextOverflow.ellipsis,
               )
             ],

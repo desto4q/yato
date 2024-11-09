@@ -39,6 +39,7 @@ class ZoroAnime {
       return null;
     }
   }
+
   Future getPopular() async {
     try {
       final response = await Dio()
@@ -57,6 +58,7 @@ class ZoroAnime {
       return null;
     }
   }
+
   Future getRecent() async {
     try {
       final response = await Dio()
@@ -72,6 +74,41 @@ class ZoroAnime {
       }
     } catch (err) {
       print('Error fetching data: $err');
+      return null;
+    }
+  }
+
+  Future getInfo(String id) async {
+    try {
+      final response = await Dio()
+          .get("https://dezz-consument.vercel.app/anime/zoro/info?id=${id}");
+      // If the response is successful and status code is 200
+      if (response.statusCode == 200) {
+        // Parse and return the data as ZoroAnimeResponse
+        return response.data;
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+        return null;
+      }
+    } catch (err) {
+      print('Error fetching data: $err');
+      return null;
+    }
+  }
+
+  Future getStream(String id) async {
+    try {
+      final response = await Dio()
+          .get("https://dezz-consument.vercel.app/anime/zoro/watch/${id}");
+            if (response.statusCode == 200) {
+        // Parse and return the data as ZoroAnimeResponse
+        return response.data;
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+        return null;
+      } 
+    } catch (err) {
+      print(err);
       return null;
     }
   }
