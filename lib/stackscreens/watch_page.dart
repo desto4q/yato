@@ -21,40 +21,43 @@ class WatchPage extends StatefulWidget {
 
 class _WatchPageState extends State<WatchPage> {
   late BetterPlayerController _betterPlayerController;
+  @override
+  void dispose() {
+    _betterPlayerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final cacheKey = "watch-${widget.episodes[widget.index]["id"]}";
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.info["title"],
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            "Episode ${widget.episodes[widget.index]["number"]}",
-            style: TextStyle(
-              fontSize: 18,
-              // fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 12,
-          ),
           Flexible(
             child: Query(
-              ["watch-${widget.episodes[widget.index]["id"]}"],
+              cacheKey,
               builder: (context, resp) {
                 if (resp.loading) {
                   return const Loader();
                 }
                 if (resp.data == null) {
-                  return const AspectRatio(
+                  return AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Center(
-                      child: const Text("error occured"),
+                      child: InkWell(
+                        onTap: () {
+                          queryCache.invalidateQueries(cacheKey);
+                        },
+                        child: Container(
+                          color: Colors.grey.shade400,
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("error occured"),
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 }
@@ -92,6 +95,63 @@ class _WatchPageState extends State<WatchPage> {
               },
             ),
           ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              widget.info["title"],
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              "Episode ${widget.episodes[widget.index]["number"]}",
+              style: TextStyle(fontSize: 18, color: Colors.grey.shade700
+                  // fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Divider(),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              "Episodes",
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          Expanded(
+            child: GridView.builder(
+                itemCount: widget.episodes.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 7),
+                itemBuilder: (context, index) {
+                  return InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () {
+                        final page = MaterialPageRoute(
+                            builder: (context) => WatchPage(
+                                  episodes: widget.episodes,
+                                  index: index,
+                                  info: widget.info,
+                                ));
+
+                        Navigator.pushReplacement(context, page);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                            color: Colors.blueGrey.shade800,
+                            child: Center(child: Text(index.toString()))),
+                      ));
+                }),
+          )
         ],
       ),
     );

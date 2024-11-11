@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_requery/flutter_requery.dart';
 import 'package:yato/components/loader.dart';
@@ -21,7 +20,7 @@ class HomeSection extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 12,
@@ -38,7 +37,7 @@ class HomeSection extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Center(
+                            const Center(
                               child: Text("Error"),
                             ),
                             InkWell(
@@ -46,8 +45,8 @@ class HomeSection extends StatelessWidget {
                                 queryCache.invalidateQueries(title);
                               },
                               
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Text("Reload"),
                               ),
                             )
@@ -64,8 +63,8 @@ class HomeSection extends StatelessWidget {
                               onTap: () {
                                 queryCache.invalidateQueries(title);
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Text("reload"),
                               ),
                             )
@@ -75,7 +74,7 @@ class HomeSection extends StatelessWidget {
                       final data = snapshot.data;
                       final List results = data["results"] ?? [];
                       return ListView.builder(
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemCount: results.length,
                           itemBuilder: (context, index) {

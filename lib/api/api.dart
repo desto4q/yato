@@ -81,7 +81,7 @@ class ZoroAnime {
   Future getInfo(String id) async {
     try {
       final response = await Dio()
-          .get("https://dezz-consument.vercel.app/anime/zoro/info?id=${id}");
+          .get("https://dezz-consument.vercel.app/anime/zoro/info?id=$id");
       // If the response is successful and status code is 200
       if (response.statusCode == 200) {
         // Parse and return the data as ZoroAnimeResponse
@@ -99,14 +99,31 @@ class ZoroAnime {
   Future getStream(String id) async {
     try {
       final response = await Dio()
-          .get("https://dezz-consument.vercel.app/anime/zoro/watch/${id}");
-            if (response.statusCode == 200) {
+          .get("https://dezz-consument.vercel.app/anime/zoro/watch/$id");
+      if (response.statusCode == 200) {
         // Parse and return the data as ZoroAnimeResponse
         return response.data;
       } else {
         print('Failed to load data: ${response.statusCode}');
         return null;
-      } 
+      }
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
+
+  Future getQuery(String query) async {
+    try {
+      final response =
+          await Dio().get("https://dezz-consument.vercel.app/anime/zoro/$query");
+      if (response.statusCode == 200) {
+        // Parse and return the data as ZoroAnimeResponse
+        return response.data;
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+        return null;
+      }
     } catch (err) {
       print(err);
       return null;

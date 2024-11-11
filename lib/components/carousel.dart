@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_requery/flutter_requery.dart';
 import 'package:yato/api/api.dart';
+import 'package:yato/stackscreens/info_page.dart';
 
 class Carousel extends StatefulWidget {
   const Carousel({super.key});
@@ -89,40 +90,51 @@ class Card extends StatelessWidget {
   Map mediaObject;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                width: double.infinity,
-                fit: BoxFit.cover,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                imageUrl: mediaObject["banner"],
+    return InkWell(
+      onTap: () {
+        final route = MaterialPageRoute(
+          builder: (context) {
+            return InfoPage(mediaObject: mediaObject);
+          },
+        );
+        Navigator.push(context, route);
+        
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedNetworkImage(
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  imageUrl: mediaObject["banner"],
+                ),
               ),
             ),
-          ),
-          Text(
-            mediaObject["title"],
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          Row(
-            children: [
-              Text("Episodes: ${mediaObject["sub"]}"),
-              const SizedBox(
-                width: 8,
-              ),
-              Text("Release: ${mediaObject["releaseDate"]}")
-            ],
-          )
-        ],
+            Text(
+              mediaObject["title"],
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            Row(
+              children: [
+                Text("Episodes: ${mediaObject["sub"]}"),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text("Release: ${mediaObject["releaseDate"]}")
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

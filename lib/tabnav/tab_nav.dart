@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:transitioned_indexed_stack/transitioned_indexed_stack.dart';
 import 'package:yato/tabnav/tabscreens/tab_dummy.dart';
 import 'package:yato/tabnav/tabscreens/tab_home.dart';
+import 'package:yato/tabnav/tabscreens/tab_search.dart';
 
 class TabNav extends StatefulWidget {
   const TabNav({super.key});
@@ -12,10 +13,15 @@ class TabNav extends StatefulWidget {
 }
 
 List<Map> items = [
-  {"name": "home", "icon": Icons.home},
-  {"name": "dummy", "icon": Icons.feed},
+  {"name": "Home", "icon": Icons.home},
+  {"name": "Search", "icon": Icons.search},
+  {"name": "Dummy", "icon": Icons.feed}
 ];
-List<Widget> tabItems = [const TabHome(), const TabDummy()];
+List<Widget> tabItems = [
+  const TabHome(),
+  const TabSearch(),
+  const TabDummy(),
+];
 
 class _TabNavState extends State<TabNav> {
   int _selected_index = 0;
@@ -24,7 +30,6 @@ class _TabNavState extends State<TabNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FadeIndexedStack(
-        
         index: _selected_index,
         children: tabItems,
       ),

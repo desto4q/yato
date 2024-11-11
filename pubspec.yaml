@@ -47,6 +47,8 @@ dependencies:
   expandable_text: ^2.3.0
   better_player: ^0.0.84
   flutter_hls_parser: ^2.0.1
+  draggable_scrollbar: ^0.1.0
+  vs_scrollbar: ^1.0.0
 
 dev_dependencies:
   flutter_test:

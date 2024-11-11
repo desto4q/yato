@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:yato/stackscreens/info_page.dart';
 
-class SectionCard extends StatelessWidget {
-  const SectionCard({super.key, required this.mediaObject});
+class SearchCard extends StatelessWidget {
+  const SearchCard({super.key, required this.mediaObject});
   final mediaObject;
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,8 @@ class SectionCard extends StatelessWidget {
         Navigator.push(context, route);
       },
       borderRadius: BorderRadius.circular(8),
-      child: AspectRatio(
-        aspectRatio: 6 / 10,
-        child: Padding(
+      child: Container(
+        child:Padding(
           padding: const EdgeInsets.all(4.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
