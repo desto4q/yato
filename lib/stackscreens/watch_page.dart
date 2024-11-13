@@ -148,7 +148,7 @@ class _WatchPageState extends State<WatchPage> {
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
                             color: Colors.blueGrey.shade800,
-                            child: Center(child: Text(index.toString()))),
+                            child: Center(child: Text(widget.episodes[index]["number"].toString()))),
                       ));
                 }),
           )

@@ -42,6 +42,10 @@ class _TabSearchState extends State<TabSearch> {
                 Flexible(
                   child: SearchBar(
                     controller: _controller,
+                    hintText: "Naruto...",
+                    hintStyle: WidgetStatePropertyAll<TextStyle>(
+                      TextStyle(color: Colors.grey.shade600, fontSize: 16),
+                    ),
                     onSubmitted: (e) {
                       setState(() {
                         searchTerm = e;
@@ -88,13 +92,15 @@ class _TabSearchState extends State<TabSearch> {
                       return const Text("error occured");
                     }
 
-                    final data = resp.data ?? {};
+                    final Map<String, dynamic> data = resp.data ?? {};
                     final List results = data["results"];
                     // return Text(searchTerm);
                     // return Text(results.toString());
                     final bool hasNextPage = data["hasNextPage"];
                     final int? currentPage = data["currentPage"];
-                    
+                    if (data == null) {
+                            return Loader();
+                    }
                     return Stack(
                       children: [
                         GridView.builder(

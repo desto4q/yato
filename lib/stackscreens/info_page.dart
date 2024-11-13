@@ -177,8 +177,8 @@ class _InfoPageState extends State<InfoPage> {
                                     child: Container(
                                         color: Colors.blueGrey.shade800,
                                         child: Center(
-                                            child: Text(index.toString()))),
-                                  ));
+                                            child: Text(episodes[index]["number"].toString())),
+                                  )));
                             }),
                       )
                     ],
