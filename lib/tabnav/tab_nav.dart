@@ -29,17 +29,19 @@ class _TabNavState extends State<TabNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: FadeIndexedStack(
         index: _selected_index,
         children: tabItems,
       ),
       bottomNavigationBar: FlashyTabBar(
         showElevation: true,
-        backgroundColor: ThemeData.dark().scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         items: items.map((ele) {
           return FlashyTabBarItem(
-              activeColor: const Color(0xff9496c1),
-              inactiveColor: _active_color,
+              // activeColor: const Color(0xff9496c1),
+              inactiveColor: Theme.of(context).dividerColor,
+              activeColor:Theme.of(context).textTheme.bodyLarge!.color?? Colors.red,
               icon: Icon(ele["icon"]),
               title: Text(ele["name"]));
         }).toList(),

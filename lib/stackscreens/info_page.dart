@@ -3,6 +3,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_requery/flutter_requery.dart';
+import 'package:hive/hive.dart';
 import 'package:transitioned_indexed_stack/transitioned_indexed_stack.dart';
 import 'package:vs_scrollbar/vs_scrollbar.dart';
 import 'package:yato/api/api.dart';
@@ -23,8 +24,10 @@ class InfoPage extends StatefulWidget {
   State<InfoPage> createState() => _InfoPageState();
 }
 
+final box = Hive.box("settings");
+
 class _InfoPageState extends State<InfoPage> {
-  int _selected_index = 0;
+  int _selected_index = box.get("info_page_index", defaultValue: 0);
   final ScrollController _scrollController = ScrollController();
   final Color _active_color = ThemeData.dark().focusColor;
   @override
@@ -173,24 +176,29 @@ class _InfoPageState extends State<InfoPage> {
                                     Navigator.push(context, page);
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Container(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Container(
                                         color: Colors.blueGrey.shade800,
                                         child: Center(
-                                            child: Text(episodes[index]["number"].toString())),
-                                  )));
+                                            child: Text(episodes[index]
+                                                    ["number"]
+                                                .toString())),
+                                      )));
                             }),
                       )
                     ],
                   ),
                 ),
                 FlashyTabBar(
-                    backgroundColor: ThemeData.dark().scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
                     selectedIndex: _selected_index,
                     items: items.map((ele) {
                       return FlashyTabBarItem(
-                          activeColor: const Color(0xff9496c1),
-                          inactiveColor: _active_color,
+                          inactiveColor: Theme.of(context).dividerColor,
+                          activeColor:
+                              Theme.of(context).textTheme.bodyLarge!.color ??
+                                  Colors.red,
                           icon: Icon(ele["icon"] as IconData?),
                           title: Text(ele["name"] as String));
                     }).toList(),

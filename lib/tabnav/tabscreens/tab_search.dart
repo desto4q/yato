@@ -99,7 +99,7 @@ class _TabSearchState extends State<TabSearch> {
                     final bool hasNextPage = data["hasNextPage"];
                     final int? currentPage = data["currentPage"];
                     if (data == null) {
-                            return Loader();
+                      return Loader();
                     }
                     return Stack(
                       children: [

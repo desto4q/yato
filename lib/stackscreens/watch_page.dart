@@ -26,7 +26,7 @@ class _WatchPageState extends State<WatchPage> {
     _betterPlayerController.dispose();
     super.dispose();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     final cacheKey = "watch-${widget.episodes[widget.index]["id"]}";
